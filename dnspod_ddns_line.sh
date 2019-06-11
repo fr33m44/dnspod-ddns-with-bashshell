@@ -5,9 +5,9 @@
 API_ID=12345
 API_Token=abcdefghijklmnopq2333333
 domain=example.com
-host=home
+host=
 #OUT="pppoe"
-DEV="eth0"
+DEV="ppp0"
 #CONF END
 . /etc/profile
 date
@@ -19,9 +19,9 @@ DEVIP="Get $DOMAIN DEVIP Failed."
 fi
 echo "[DEV IP]:$DEVIP"
 dnscmd="nslookup";type nslookup >/dev/null 2>&1||dnscmd="ping -c1"
-DNSTEST=$($dnscmd $host.$domain)
+DNSTEST=$($dnscmd $host$domain)
 if [ "$?" != 0 ]&&[ "$dnscmd" == "nslookup" ]||(echo $DNSTEST |grep -qEvo "$IPREX");then
-DNSIP="Get $host.$domain DNS Failed."
+DNSIP="Get $host$domain DNS Failed."
 else DNSIP=$(echo $DNSTEST|grep -Eo "$IPREX"|tail -n1)
 fi
 echo "[DNS IP]:$DNSIP"
